@@ -1,0 +1,62 @@
+<form [formGroup]="form" (ngSubmit)="saveTodo()">
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td>
+                <input type="text" formControlName="name">
+            </td>
+            <td *ngIf="form.get('name')?.hasError('required')">
+                Please enter your name
+            </td>
+        </tr>
+        <tr>
+            <td>Email: </td>
+            <td>
+                <input type="text" formControlName="email">
+            </td>
+            <td *ngIf="form.get('email')?.hasError('required')">
+                Please enter an email
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">
+                    Save
+                </button>
+            </td>
+            <td>
+                <button type="button" (click)="addTodoForm()">
+                    Add Todo
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <div *ngIf="formArray.controls.length <= 0">
+        Please enter a new activity
+    </div>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody formArrayName="todo">
+                <tr *ngFor="let f of formArray.controls; let i = index" [formGroup]="f"> 
+                    <td>
+                        <input type="text" formControlName="activity">
+                    </td>
+                    <td>
+                        <input type="date" formControlName="date">
+                    </td>
+                    <td>
+                        <button (click)="deleteTodo(f)">X</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
